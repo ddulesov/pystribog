@@ -15,7 +15,7 @@ addons:
     update: true
 
 before_install:
-  - sudo pip install  py-cpuinfo 
+  - pip install  py-cpuinfo 
     
 script:
   - python setup.py build install
