@@ -14,10 +14,10 @@ addons:
   apt:
     update: true
 
-before_install:
-  - pip install  py-cpuinfo 
+
     
 script:
+  - cd ./src/streebog && sh ./configure && cd $TRAVIS_BUILD_DIR
   - python setup.py build install
   - python module_tests.py
 

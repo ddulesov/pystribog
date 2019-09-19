@@ -10,6 +10,7 @@ from distutils.ccompiler import get_default_compiler
 
 import sys
 import os
+'''
 import cpuinfo
 
 include_dirs = ['./src/streebog']
@@ -26,11 +27,11 @@ elif 'mmx' in cpu_flags:
 else:
     define_macros = []
     
-
+'''
 #define_macros = [('__GOST3411_HAS_SSE2__', '1')]
 
 module_ex = Extension('_pystribog',
-                    define_macros = define_macros ,
+                    #define_macros = define_macros ,
                     include_dirs = include_dirs,
                     libraries = libraries,
                     library_dirs = library_dirs,
