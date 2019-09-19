@@ -10,13 +10,14 @@ from distutils.ccompiler import get_default_compiler
 
 import sys
 import os
-'''
-import cpuinfo
+
 
 include_dirs = ['./src/streebog']
 library_dirs = []
 libraries = []
 
+'''
+import cpuinfo
 cpu_flags = cpuinfo.get_cpu_info()['flags']
 if 'sse41' in cpu_flags:
     define_macros = [('__GOST3411_HAS_SSE41__', '1')]

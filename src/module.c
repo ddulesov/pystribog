@@ -3,6 +3,7 @@
 static const char PROJECT_NAME[] = "_pystribog";
 static const char PROJECT_DOC[] = "stribog GOST hash functions";
 
+
 /*PyObject *VerifyError;
 
 PyObject* 
