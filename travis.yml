@@ -1,0 +1,30 @@
+sudo: required
+
+dist: bionic
+language: python
+cache: false
+
+matrix:
+  include:
+  - python: "3.6"
+  - python: "3.7"
+  - python: "2.7"
+
+addons:
+  apt:
+    update: true
+
+before_install:
+  - sudo apt-get install -y py-cpuinfo 
+    
+script:
+  - git describe --tags
+  - python setup.py build install
+  - python module_tests.py
+
+notifications:
+  email:
+    recipients:
+      - dmitry.dulesov@gmail.com
+    on_success: change
+    on_failure: always
