@@ -15,29 +15,22 @@ import os
 include_dirs = ['./src/streebog']
 library_dirs = []
 libraries = []
+extra_compile_args=["-O3"]
 
-'''
-import cpuinfo
-cpu_flags = cpuinfo.get_cpu_info()['flags']
-if 'sse41' in cpu_flags:
-    define_macros = [('__GOST3411_HAS_SSE41__', '1')]
-elif 'sse2' in cpu_flags:
-    define_macros = [('__GOST3411_HAS_SSE2__', '1')]
-elif 'mmx' in cpu_flags:
-    define_macros = [('__GOST3411_HAS_MMX__', '1')]
-else:
-    define_macros = []
-    
-'''
-#define_macros = [('__GOST3411_HAS_SSE2__', '1')]
+with open('./src/streebog/auto/Makefile') as f:
+    for l in f:
+        if l.startswith("CFLAGS+="):
+            extra_compile_args.append( l.strip()[8:] )
+
+define_macros = [('_FILE_OFFSET_BITS', '64')]
 
 module_ex = Extension('_pystribog',
-                    #define_macros = define_macros ,
+                    define_macros = define_macros ,
+                    extra_compile_args=extra_compile_args,
                     include_dirs = include_dirs,
                     libraries = libraries,
                     library_dirs = library_dirs,
                     sources = [
-                        'src/streebog/gost3411-2012.c',
                         'src/streebog/gost3411-2012-core.c',
                         'src/module.c',
                         'src/hash.c' 

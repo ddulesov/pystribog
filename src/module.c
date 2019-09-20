@@ -3,7 +3,6 @@
 static const char PROJECT_NAME[] = "_pystribog";
 static const char PROJECT_DOC[] = "stribog GOST hash functions";
 
-
 /*PyObject *VerifyError;
 
 PyObject* 
@@ -14,6 +13,7 @@ raiseError(PyObject *ErrType, const char *message){
 */
 // module own method definitions
 static PyMethodDef py_methods[] = {
+    //no module methods
     { NULL, NULL, 0, NULL }        /* Sentinel */
 };
 
@@ -26,12 +26,6 @@ static struct PyModuleDef py_module = {
     -1,       /* size of per-interpreter state of the module,
                  or -1 if the module keeps state in global variables. */
     pystribog_methods,
-    /*
-    0,  
-    0,  
-    pymodule_clear,
-    0, 
-    */
 };
 
 #define  INIT_FUNCTION_NAME PyInit__py( void )
