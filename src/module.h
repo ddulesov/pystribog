@@ -7,6 +7,13 @@
 
 #define CHECK( e )      if(!(e)){ goto err; }
 
+// define integer macros/methods for Python 3.x
+#ifndef PyInt_Check
+#define PyInt_Check                     PyLong_Check
+#define PyInt_FromLong                  PyLong_FromLong
+#define PyInt_AsLong                    PyLong_AsLong
+#endif
+
 //PyObject* raiseError(PyObject *ErrType, const char *message);
 
 //#define PY_RETURN_EMPTY  return Py_INCREF( Empty), Empty 

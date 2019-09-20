@@ -28,7 +28,7 @@ static struct PyModuleDef py_module = {
     py_methods,
 };
 
-#define  INIT_FUNCTION_NAME PyInit__py( void )
+#define  INIT_FUNCTION_NAME PyInit__pystribog( void )
 #else
 #define  INIT_FUNCTION_NAME	init_pystribog( void )
 #endif
