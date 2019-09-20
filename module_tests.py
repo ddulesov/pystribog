@@ -39,6 +39,8 @@ class TestModuleMethods(unittest.TestCase):
 
         self.assertEqual(res, E )
 
+        self.assertEqual( h.digest_size, 64 )
+
     def test_hash_256(self):
         h = _pystribog.StribogHash(256)
         h.update(M1)
@@ -53,6 +55,8 @@ class TestModuleMethods(unittest.TestCase):
         h.update(M1)
         res = to_bytes(h.hexdigest())
         self.assertEqual(res, E )
+
+        self.assertEqual( h.digest_size, 32 )
     
     def test_adegtyarev_lib(self):
         #load test data

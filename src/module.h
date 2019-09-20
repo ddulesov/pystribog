@@ -7,7 +7,7 @@
 
 #define CHECK( e )      if(!(e)){ goto err; }
 
-// define integer macros/methods for Python 3.x
+// define integer macros/methods for Python 3.x. lift from cx_Oracle
 #ifndef PyInt_Check
 #define PyInt_Check                     PyLong_Check
 #define PyInt_FromLong                  PyLong_FromLong
@@ -51,8 +51,8 @@ extern PyTypeObject pystribogPyTypeHash;
 //structs
 struct pystribogHash {
     PyObject_HEAD;
+    //double size for the sake of alignment
     unsigned char data[2 * sizeof(GOST34112012Context) ];
-    int dig;
 };
 
 #endif

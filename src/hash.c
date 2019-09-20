@@ -54,7 +54,6 @@ py_init(PyObject *self, PyObject *args, PyObject *keywordArgs){
     //printf("address self=%p ctx=%p \n",self, ctx);
 
     GOST34112012Init(ctx, dig);
-    ((pystribogHash*)self)->dig = dig;
 
     return 0;
 }
@@ -131,8 +130,10 @@ _Update(pystribogHash *self, PyObject *args){
 static PyObject *
 _Clear(pystribogHash *self, PyObject *args){
     GOST34112012Context *ctx = CTX( self );
+    unsigned int dig = ctx->digest_size;
     GOST34112012Cleanup(ctx);
-    GOST34112012Init(ctx, self->dig);
+
+    GOST34112012Init(ctx, dig);
     Py_RETURN_NONE; 
 }
 
@@ -143,7 +144,7 @@ _Final(pystribogHash *self, PyObject *args){
     GOST34112012Context *ctx = CTX( (pystribogHash*)self );
     GOST34112012Final(ctx, &digest[0]);
 
-    PY_RETURN_BUF((const char*)&digest[0], self->dig>>3 );
+    PY_RETURN_BUF((const char*)&digest[0], (ctx->digest_size )>>3 );
 }
 
 static PyObject *
@@ -155,17 +156,17 @@ _HexDigest(pystribogHash *self, PyObject *args){
     char buf[130];
     char *ptr = buf;
 
-    for(int i=0;i<self->dig>>3;i++){
+    for(int i=0;i< (ctx->digest_size )>>3 ;i++){
         ptr+=PyOS_snprintf(ptr, sizeof(buf) - (ptr-buf)-1,"%02x", digest[i] );
     }
     *ptr='\0';
 
     PyObject* ret = PyUnicode_FromStringAndSize(buf, ptr-buf);
-    
     return ret;
 }
 
 static PyObject *
 getDigestSize(pystribogHash *self, void *unused){
-    return PyInt_FromLong(self->dig>>3);
+    GOST34112012Context *ctx = CTX( (pystribogHash*)self );
+    return PyInt_FromLong((ctx->digest_size )>>3 );
 }
