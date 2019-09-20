@@ -1,18 +1,19 @@
 # pystribog
 Stribog (GOST R 34.11-2012 ) hash python library 
 
-[![Build Status](https://travis-ci.com/ddulesov/pystribog.svg?branch=master)](https://travis-ci.com/ddulesov/pystribog) 
+[![Build Status](https://travis-ci.org/ddulesov/pystribog.svg?branch=master)](https://travis-ci.org/ddulesov/pystribog)
 
 ## Features
 - python 3.x and python 2.7 support
-- use fast C(sse4.1) Stribog [ degtyarev implementaion](https://github.com/adegtyarev/streebog.git)
+- use fast C(sse4.1/sse2) degtyarev  [Stribog implementaion](https://github.com/adegtyarev/streebog.git)
 - Linux , OSx supported
 
 ## Issues
-- only PEM encoding CMS and certificate supported 
+- Windows version in development
 
 ## Requirements
 - python 2.7 or python 3.6+ 
+- gcc 7.x+
 
 ## Building and Installation
 ```console

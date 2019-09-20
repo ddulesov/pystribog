@@ -1,8 +1,15 @@
 import unittest
 import _pystribog
 import binascii
+from collections import defaultdict
+import os
+import re
 
 M1=b"012345678901234567890123456789012345678901234567890123456789012"
+
+def read_file(fname):
+    with open(fname,"rb") as f:
+        return f.read()
 
 class TestModuleMethods(unittest.TestCase):
     
@@ -35,6 +42,49 @@ class TestModuleMethods(unittest.TestCase):
         h.update(M1)
         res = h.hexdigest()
         self.assertEqual(res, E )
+    
+    def test_adegtyarev_lib(self):
+        #load test data
+        tdata = defaultdict(lambda:{"msg":None,"h256":None, "h512":None} )
+
+        reM = re.compile("^M(\d+)$")
+        reH = re.compile("^H(\d+)\.(\d+)$")
+
+        parent = "./src/streebog/examples"
+        for fname in os.listdir(parent):
+            m = reM.match(fname)
+            if m:
+                id = m.group(1)
+                tdata[id]["msg"] = read_file(os.path.join(parent,fname) )
+                continue
+            m = reH.match(fname)
+            if m:
+                id = m.group(1)
+                dig = m.group(2)
+                if dig=='256':
+                    hash = "h256"
+                elif dig=='512':
+                    hash = "h512"
+                else:
+                    continue
+
+                tdata[id][hash] = read_file(os.path.join(parent,fname) )
+
+
+        h256 = _pystribog.StribogHash(256)
+        h512 = _pystribog.StribogHash(512)
+
+        for k,v in tdata.items():
+            #print(v)
+            h256.clear()
+            h256.update(v["msg"])
+            hash = binascii.hexlify( h256.digest() )
+            self.assertEqual(hash, v["h256"] )
+
+            h512.clear()
+            h512.update(v["msg"])
+            hash = binascii.hexlify( h512.digest() )
+            self.assertEqual(hash, v["h512"] )
 
 if __name__ == '__main__':
     unittest.main()        
