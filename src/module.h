@@ -51,8 +51,8 @@ extern PyTypeObject pystribogPyTypeHash;
 //structs
 struct pystribogHash {
     PyObject_HEAD;
-    //double size for the sake of alignment
-    unsigned char data[2 * sizeof(GOST34112012Context) ];
+    //+16 byte to struct size for proper SSE  alignment
+    unsigned char data[sizeof(GOST34112012Context)+16 ];
 };
 
 #endif
