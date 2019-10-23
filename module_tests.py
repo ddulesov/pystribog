@@ -65,7 +65,7 @@ class TestModuleMethods(unittest.TestCase):
         reM = re.compile("^M(\d+)$")
         reH = re.compile("^H(\d+)\.(\d+)$")
 
-        parent = "./src/streebog/examples"
+        parent = "./src/examples"
         for fname in os.listdir(parent):
             m = reM.match(fname)
             if m:

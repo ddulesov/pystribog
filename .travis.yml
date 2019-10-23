@@ -13,8 +13,6 @@ matrix:
 addons:
   apt:
     update: true
-
-
     
 script:
   - cd ./src/streebog && sh ./configure && cd $TRAVIS_BUILD_DIR

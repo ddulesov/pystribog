@@ -3,7 +3,7 @@
 #define _MODULE_H
 
 #include <Python.h>
-#include <gost3411-2012-core.h>
+#include "gost3411-2012-core.h"
 
 #define CHECK( e )      if(!(e)){ goto err; }
 
@@ -50,7 +50,7 @@ extern PyTypeObject pystribogPyTypeHash;
 
 //structs
 struct pystribogHash {
-    PyObject_HEAD;
+    PyObject_HEAD
     //+16 byte to struct size for proper SSE  alignment
     unsigned char data[sizeof(GOST34112012Context)+16 ];
 };

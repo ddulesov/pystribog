@@ -156,7 +156,7 @@ _HexDigest(pystribogHash *self, PyObject *args){
     char buf[130];
     char *ptr = buf;
 
-    for(int i=0;i< (ctx->digest_size )>>3 ;i++){
+    for(unsigned int i=0;i< (ctx->digest_size )>>3 ;i++){
         ptr+=PyOS_snprintf(ptr, sizeof(buf) - (ptr-buf)-1,"%02x", digest[i] );
     }
     *ptr='\0';

@@ -1,7 +1,7 @@
 #include "module.h"
 
 static const char PROJECT_NAME[] = "_pystribog";
-static const char PROJECT_DOC[] = "stribog GOST hash functions";
+static const char PROJECT_DOC[] = "GOST 34.11-2012 (streebog) hash functions";
 
 /*PyObject *VerifyError;
 

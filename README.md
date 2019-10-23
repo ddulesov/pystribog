@@ -6,14 +6,12 @@ Stribog (GOST R 34.11-2012 ) hash python library
 ## Features
 - python 3.x and python 2.7 support
 - use fast C(sse4.1/sse2) degtyarev  [Stribog implementaion](https://github.com/adegtyarev/streebog.git)
-- Linux , OSx supported
+- Linux ,  Windows supported
 
-## Issues
-- Windows version in development
 
 ## Requirements
 - python 2.7 or python 3.6+ 
-- gcc 7.x+
+- gcc 7.x+, msvc
 
 ## Building and Installation
 ```console
@@ -35,7 +33,7 @@ python3 setup.py bdist
 ## Quickstart
 ```python
 import _pystribog
-
+import binascii
 h = _pystribog.StribogHash( _pystribog.Hash512 )
 h.update(b"12345")
 res = h.digest()
