@@ -1,6 +1,10 @@
 #pragma once
 
 #include <immintrin.h>
+#include <string.h>
+#if defined(__GNUC__)
+#include <x86intrin.h>
+#endif
 //#define __GOST3411_HAS_SSE41__
 //#define __GOST3411_HAS_SSE2__
 
