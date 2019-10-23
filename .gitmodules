@@ -1,3 +1,0 @@
-[submodule "src/streebog"]
-	path = src/streebog
-	url = git://github.com/adegtyarev/streebog.git

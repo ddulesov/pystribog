@@ -20,9 +20,9 @@ extra_compile_args=[]
 extra_link_args=[]
 
 if sys.platform == "linux":
-    extra_compile_args.append("CFLAGS+=-msse4.1")
+    extra_compile_args.append("-msse4.1")
 elif sys.platform == "cygwin":
-    extra_compile_args.append("CFLAGS+=-msse4.1")
+    extra_compile_args.append("-msse4.1")
     extra_link_args.append("-Wl,--enable-runtime-pseudo-reloc")
 elif sys.platform == "darwin":
     extra_link_args.append("-shared-libgcc")
