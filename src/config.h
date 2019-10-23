@@ -12,7 +12,7 @@
 #define ALIGNED __attribute__  ((__aligned__(16)))
 #endif
 
-typedef unsigned __int64  uint64;
+//typedef unsigned __int64  uint64;
 
 typedef ALIGNED union u512
 {

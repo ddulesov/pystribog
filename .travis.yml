@@ -15,7 +15,6 @@ addons:
     update: true
     
 script:
-  - cd ./src/streebog && sh ./configure && cd $TRAVIS_BUILD_DIR
   - python setup.py build install
   - python module_tests.py
 
