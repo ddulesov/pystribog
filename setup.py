@@ -19,7 +19,7 @@ import os
 extra_compile_args=[]
 extra_link_args=[]
 
-if sys.platform == "linux":
+if sys.platform == "linux" or sys.platform == "linux2":
     extra_compile_args.append("-msse4.1")
 elif sys.platform == "cygwin":
     extra_compile_args.append("-msse4.1")

@@ -26,8 +26,8 @@ pad(GOST34112012Context *CTX)
     if (CTX->bufsize > 63)
         return;
 
-	memset(CTX->buffer + CTX->bufsize,
-			0x00, sizeof(CTX->buffer) - CTX->bufsize);
+    memset(CTX->buffer + CTX->bufsize,
+	0x00, sizeof(CTX->buffer) - CTX->bufsize);
 
     CTX->buffer[CTX->bufsize] = 0x01;
 }
