@@ -89,6 +89,7 @@ class TestModuleMethods(unittest.TestCase):
         h256 = _pystribog.StribogHash(256)
         h512 = _pystribog.StribogHash(512)
 
+        self.assertTrue( len(tdata)>=4 )
         for k,v in tdata.items():
             #print(v)
             h256.clear()
