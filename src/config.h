@@ -5,8 +5,6 @@
 #if defined(__GNUC__)
 #include <x86intrin.h>
 #endif
-//#define __GOST3411_HAS_SSE41__
-//#define __GOST3411_HAS_SSE2__
 
 #if defined _MSC_VER
 #define ALIGN(x) __declspec(align(x))
@@ -16,11 +14,9 @@
 #define ALIGNED __attribute__  ((__aligned__(16)))
 #endif
 
-//typedef unsigned __int64  uint64;
-
 typedef ALIGNED union u512
 {
-	unsigned long long QWORD[8];
+    unsigned long long QWORD[8];
 } u512_t;
 
 #ifdef _DEBUG 

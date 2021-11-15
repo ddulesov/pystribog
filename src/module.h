@@ -1,7 +1,6 @@
-
 #ifndef _MODULE_H
 #define _MODULE_H
-
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "gost3411-2012-core.h"
 
@@ -16,7 +15,6 @@
 
 //PyObject* raiseError(PyObject *ErrType, const char *message);
 
-//#define PY_RETURN_EMPTY  return Py_INCREF( Empty), Empty 
 #define PY_RETURN_BUF(ptr, len)  return PyBytes_FromStringAndSize(ptr, len);
 
 #if PY_MAJOR_VERSION > 2
@@ -51,7 +49,7 @@ extern PyTypeObject pystribogPyTypeHash;
 //structs
 struct pystribogHash {
     PyObject_HEAD
-    //+16 byte to struct size for proper SSE  alignment
+    //+16 byte to struct size for proper SSE alignment
     unsigned char data[sizeof(GOST34112012Context)+16 ];
 };
 
