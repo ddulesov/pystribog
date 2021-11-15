@@ -12,12 +12,12 @@ GOST34112012Init(GOST34112012Context *CTX, const unsigned int digest_size)
     unsigned int i;
     memset(CTX, 0x00, sizeof(GOST34112012Context));
     CTX->digest_size = digest_size;
-	if (digest_size == 256) {
-		for (i = 0; i < 8; i++)
-		{
-			CTX->h.QWORD[i] = 0x0101010101010101ULL;
-		}
-	}
+    if (digest_size == 256) {
+        for (i = 0; i < 8; i++)
+        {
+            CTX->h.QWORD[i] = 0x0101010101010101ULL;
+        }
+    }
 }
 
 static inline void
@@ -27,7 +27,7 @@ pad(GOST34112012Context *CTX)
         return;
 
     memset(CTX->buffer + CTX->bufsize,
-	0x00, sizeof(CTX->buffer) - CTX->bufsize);
+    0x00, sizeof(CTX->buffer) - CTX->bufsize);
 
     CTX->buffer[CTX->bufsize] = 0x01;
 }
@@ -41,7 +41,7 @@ add512(u512_t* x, const u512_t* y)
 
     for (i = 0; i < 8; i++)
     {
-		cf = _addcarry_u64(cf, x->QWORD[i], y->QWORD[i], &(x->QWORD[i]));
+        cf = _addcarry_u64(cf, x->QWORD[i], y->QWORD[i], &(x->QWORD[i]));
     }
 #else
     const unsigned char *xp, *yp;
@@ -64,48 +64,48 @@ add512(u512_t* x, const u512_t* y)
 
 static inline void g(u512_t *h, const u512_t *N, const unsigned char *m) {
 
-	__m128i xmm0, xmm1, xmm2, xmm3;
-	__m128i xmm4, xmm5, xmm6, xmm7;
-	register unsigned long long r0, r1;
-	//key
-	LOAD_XMM(h, xmm0, xmm1, xmm2, xmm3);
-	
-	//into_xor_m ( n )
-	XOR_XMM((*N), xmm0, xmm1, xmm2, xmm3);
-	
-	LPS(xmm0, xmm1, xmm2, xmm3);
-	//buffer
-	LOADU_XMM(m, xmm4, xmm5, xmm6, xmm7);
+    __m128i xmm0, xmm1, xmm2, xmm3;
+    __m128i xmm4, xmm5, xmm6, xmm7;
+    register unsigned long long r0, r1;
+    //key
+    LOAD_XMM(h, xmm0, xmm1, xmm2, xmm3);
+    
+    //into_xor_m ( n )
+    XOR_XMM((*N), xmm0, xmm1, xmm2, xmm3);
+    
+    LPS(xmm0, xmm1, xmm2, xmm3);
+    //buffer
+    LOADU_XMM(m, xmm4, xmm5, xmm6, xmm7);
 
-	for (int i = 0; i < 12; i++) {
-		//buffer.into_xor(key)
-		XOR_XMM2(xmm4, xmm5, xmm6, xmm7, xmm0, xmm1, xmm2, xmm3);
-		//buffer.lps()
-		LPS(xmm4, xmm5, xmm6, xmm7);
-		//key.into_xor( c[i] )
-		XOR_XMM(C[i], xmm0, xmm1, xmm2, xmm3);
-		//key.lps()
-		LPS(xmm0, xmm1, xmm2, xmm3);
-	}
+    for (int i = 0; i < 12; i++) {
+        //buffer.into_xor(key)
+        XOR_XMM2(xmm4, xmm5, xmm6, xmm7, xmm0, xmm1, xmm2, xmm3);
+        //buffer.lps()
+        LPS(xmm4, xmm5, xmm6, xmm7);
+        //key.into_xor( c[i] )
+        XOR_XMM(C[i], xmm0, xmm1, xmm2, xmm3);
+        //key.lps()
+        LPS(xmm0, xmm1, xmm2, xmm3);
+    }
 
-	//key.xor_r( buffer )
-	XOR_XMM2(xmm0, xmm1, xmm2, xmm3,  xmm4, xmm5, xmm6, xmm7 );
+    //key.xor_r( buffer )
+    XOR_XMM2(xmm0, xmm1, xmm2, xmm3,  xmm4, xmm5, xmm6, xmm7 );
 
-	//use ymm2 ymm3 as buffer is not need anymore
-	LOADU_XMM(m, xmm4, xmm5, xmm6, xmm7);
+    //use ymm2 ymm3 as buffer is not need anymore
+    LOADU_XMM(m, xmm4, xmm5, xmm6, xmm7);
 
-	//key.xor_m ( m )
-	XOR_XMM2(xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7);
+    //key.xor_m ( m )
+    XOR_XMM2(xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7);
 
-	//key.xor_m ( h )
-	XOR_XMM( (*h), xmm0, xmm1, xmm2, xmm3);
-	STORE_XMM(h, xmm0, xmm1, xmm2, xmm3);
+    //key.xor_m ( h )
+    XOR_XMM( (*h), xmm0, xmm1, xmm2, xmm3);
+    STORE_XMM(h, xmm0, xmm1, xmm2, xmm3);
 }
 
 static inline void
 stage2(GOST34112012Context *CTX, const unsigned char *data)
 {
-	g(&(CTX->h), &(CTX->N), data );
+    g(&(CTX->h), &(CTX->N), data );
     add512(&(CTX->N), &buffer512);
     add512(&(CTX->Sigma), (const u512_t *)data);
 }
