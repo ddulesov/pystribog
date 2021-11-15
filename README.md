@@ -2,6 +2,7 @@
 Streebog hash (GOST R 34.11-2012 )  python library 
 
 [![Build Status](https://travis-ci.org/ddulesov/pystribog.svg?branch=master)](https://travis-ci.org/ddulesov/pystribog)
+[![Build Status](https://dev.azure.com/dmitrydulesov/dmitrydulesov/_apis/build/status/ddulesov.pystribog?branchName=master)](https://dev.azure.com/dmitrydulesov/dmitrydulesov/_build/latest?definitionId=1&branchName=master)
 
 ## Features
 - python 3.x and python 2.7 support
@@ -9,7 +10,7 @@ Streebog hash (GOST R 34.11-2012 )  python library
 - Linux ,  Windows (probably OSx but not tested) supported
 
 ## Requirements
-- python 2.7 or python 3.6+ 
+- python 2.7 or python 3.8+ 
 - gcc 7.x+ or  msvc compatible with used Python version 
 - sse4.1 capable CPU 
 
