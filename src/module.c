@@ -21,16 +21,17 @@ static PyMethodDef py_methods[] = {
 
 static struct PyModuleDef py_module = {
     PyModuleDef_HEAD_INIT,
-    PROJECT_NAME,   /* name of module */
-    PROJECT_DOC, /* module documentation, may be NULL */
-    -1,       /* size of per-interpreter state of the module,
-                 or -1 if the module keeps state in global variables. */
+    PROJECT_NAME,  /* name of module */
+    PROJECT_DOC,   /* module documentation, may be NULL */
+    -1,            /* size of per-interpreter state of the module,
+                      or -1 if the module keeps state in global variables. 
+                   */
     py_methods,
 };
 
 #define  INIT_FUNCTION_NAME PyInit__pystribog( void )
 #else
-#define  INIT_FUNCTION_NAME	init_pystribog( void )
+#define  INIT_FUNCTION_NAME init_pystribog( void )
 #endif
 
 PyMODINIT_FUNC INIT_FUNCTION_NAME{
@@ -53,6 +54,6 @@ PyMODINIT_FUNC INIT_FUNCTION_NAME{
     PY_ADD_TYPE_OBJECT("StribogHash", &pystribogPyTypeHash);
 
 #if PY_MAJOR_VERSION > 2    
-    return m;	
+    return m;   
 #endif
 }

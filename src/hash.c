@@ -6,7 +6,6 @@ static PyObject *_HexDigest(pystribogHash *self, PyObject *args);
 static PyObject *_Clear(pystribogHash *self, PyObject *args);
 
 static PyObject *getDigestSize(pystribogHash *self, void *unused);
-//extern PyObject *VerifyError;
 
 static PyObject *
 py_new(PyTypeObject *type, PyObject *args,
@@ -23,7 +22,6 @@ CTX(pystribogHash *self){
         return (GOST34112012Context *)ptr;
     }
     ptr+= 0x10 - (ptr % 0x10);
-    //printf("CTX %p %p \n", &(self->data[0]), (void*)ptr  );
     return (GOST34112012Context *)ptr;
 }
 
@@ -44,15 +42,11 @@ py_init(PyObject *self, PyObject *args, PyObject *keywordArgs){
         return -1;
 
     if (dig!=256 && dig!=512){
-        //raiseError(VerifyError, "uninitialized cms");
         return -1;
     }
 
     //if (posix_memalign(&CTX, (size_t) 16, sizeof(GOST34112012Context)))
     GOST34112012Context *ctx = CTX( (pystribogHash*) self );
-
-    //printf("address self=%p ctx=%p \n",self, ctx);
-
     GOST34112012Init(ctx, dig);
 
     return 0;
@@ -75,12 +69,12 @@ PyTypeObject pystribogPyTypeHash = {
     "_pystribog.StribogHash",           // tp_name
     sizeof(pystribogHash),              // tp_basicsize
     0,                                  // tp_itemsize
-    (destructor) py_free,                // tp_dealloc
+    (destructor) py_free,               // tp_dealloc
     0,                                  // tp_print
     0,                                  // tp_getattr
     0,                                  // tp_setattr
     0,                                  // tp_compare
-    0,                                   // tp_repr
+    0,                                  // tp_repr
     0,                                  // tp_as_number
     0,                                  // tp_as_sequence
     0,                                  // tp_as_mapping
@@ -100,7 +94,7 @@ PyTypeObject pystribogPyTypeHash = {
     0,                                  // tp_iternext
     py_methods,                         // tp_methods
     0,                                  // tp_members
-    py_members,                                  // tp_getset
+    py_members,                         // tp_getset
     0,                                  // tp_base
     0,                                  // tp_dict
     0,                                  // tp_descr_get
@@ -117,10 +111,11 @@ PyTypeObject pystribogPyTypeHash = {
 static PyObject *
 _Update(pystribogHash *self, PyObject *args){
     const unsigned char *data=NULL;
-    size_t len = 0;
+    Py_ssize_t len = 0;
 
-    if (!PyArg_ParseTuple(args, "s#", &data, &len))
+    if (!PyArg_ParseTuple(args, "s#", &data, &len) || len<0)
         return NULL;
+
     GOST34112012Context *ctx = CTX( (pystribogHash*)self );
 
     GOST34112012Update(ctx, data, (size_t) len); 
@@ -156,7 +151,7 @@ _HexDigest(pystribogHash *self, PyObject *args){
     char buf[130];
     char *ptr = buf;
 
-    for(unsigned int i=0;i< (ctx->digest_size )>>3 ;i++){
+    for(unsigned int i=0; i<(ctx->digest_size )>>3 ;i++){
         ptr+=PyOS_snprintf(ptr, sizeof(buf) - (ptr-buf)-1,"%02x", digest[i] );
     }
     *ptr='\0';
